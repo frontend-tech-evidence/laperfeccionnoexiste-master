@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "moduleResolution": "node",
+        "noImplicitAny": false,
+        // "sourceMap": true,
+        "outDir": "./dist/"
+    },
+    "include": [
+        "src/**/**/*",
+        "ui/**/**/*",
+        "src/modules/paquete/application/PrintPaquete.ts"
+    ],
+    "exclude": ["node_modules", "src/tests/**/*"]
+}

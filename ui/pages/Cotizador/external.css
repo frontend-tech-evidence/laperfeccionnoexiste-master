@@ -1,0 +1,61 @@
+/*
+Elimina los botones para incrementar y decremental el numero del input number.
+*/
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+@keyframes scroll {
+    from {
+        transform: translate(-500px, 0);
+    }
+
+    50% {
+        transform: translate(500px, 0);
+    }
+
+    to {
+        transform: translate(-500px, 0);
+    }
+}
+
+.sliderLogos {
+    animation: scroll;
+    animation-duration: 30s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+}
+
+/* Estilos dinamicos */
+
+:root {
+    --width-contenedor-td: 20rem;
+    --width-contenedor-th: 16rem;
+    --width-contenedor-tabla: 116.05rem;
+    --width-img: 1rem;
+}
+
+.containerWidthTd {
+    max-width: var(--width-contenedor-td);
+    min-width: var(--width-contenedor-td);
+}
+
+.containerWidthTh {
+    max-width: var(--width-contenedor-th);
+    min-width: var(--width-contenedor-th);
+}
+
+.containerWidthTabla {
+    max-width: var(--width-contenedor-tabla);
+    min-width: var(--width-contenedor-tabla);
+}
+
+.iconsWidth {
+    width: var(--width-img);
+}
