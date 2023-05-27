@@ -3,6 +3,7 @@
  * @description Unicamente interaccion con la UI.
  */
 
+import { IPdfCotizacion } from '../../../src/modules/cotizacion/domain/IPdfCotizacion.js'
 import { getAllCostosPaquetes } from '../../../src/modules/cotizador/application/CostosPaquete.js'
 import { cambiarDeDivisa } from '../../../src/modules/cotizador/application/Divisas.js'
 import {
@@ -105,12 +106,39 @@ const spansCostos = [
     'precioCapacitacionUsuarios',
     'upgradeVersion',
     'precioRazonSocialAdicional',
+    'precioUsuarioAdicionalRazonSocial',
 ]
 
 function convertirAInteger(cadena) {
     const cadenaSinComas = cadena.replace(/,/g, '')
     const entero = parseInt(cadenaSinComas, 10)
     return entero
+}
+
+function cambiarSpanXML(moneda: string) {
+    const generacionXMLGrow = document.getElementById('generacionXMLGrow')
+    const generacionXMLInstitutional = document.getElementById(
+        'generacionXMLInstitutional'
+    )
+    const generacionXMLManufacturing = document.getElementById(
+        'generacionXMLManufacturing'
+    )
+    const generacionXMLEnterprise = document.getElementById(
+        'generacionXMLEnterprise'
+    )
+
+    generacionXMLGrow.textContent = '1'
+    generacionXMLInstitutional.textContent = '1'
+    generacionXMLManufacturing.textContent = '1'
+    generacionXMLEnterprise.textContent = '1'
+
+    if (moneda === 'usd') {
+        generacionXMLGrow.textContent = '0.625'
+        generacionXMLGrow.textContent = '0.625'
+        generacionXMLInstitutional.textContent = '0.625'
+        generacionXMLManufacturing.textContent = '0.625'
+        generacionXMLEnterprise.textContent = '0.625'
+    }
 }
 
 function cambiarSpanDeDivisaDolares(
@@ -138,6 +166,18 @@ function cambiarSpanDeDivisaDolares(
 
                 spanCostoElement.textContent = costoFinal
             }
+        }
+    }
+}
+
+function cambiarElementoADolares(spanId, moneda: string) {
+    const spanCostoElement = document.getElementById(`${spanId}`)
+
+    if (spanCostoElement) {
+        spanCostoElement.textContent = '9,800'
+
+        if (moneda === 'usd') {
+            spanCostoElement.textContent = '612'
         }
     }
 }
@@ -267,6 +307,8 @@ function printMoneda() {
     cambiarSpanDeDivisaDolares(spansCostos, costosTablaInstitutional, moneda)
     cambiarSpanDeDivisaDolares(spansCostos, costosTablaManufacturing, moneda)
     cambiarSpanDeDivisaDolares(spansCostos, costosTablaEnterprise, moneda)
+    cambiarElementoADolares('migracionGrow', moneda)
+    cambiarSpanXML(moneda)
     updateMoneda(moneda)
 }
 
@@ -361,11 +403,13 @@ function handleClick(targetElement, entity, maxValue, minValue) {
     if (targetElement.matches(`#decrement${entity}`)) {
         handleDecrementClick(entity, minValue)
         printLabelUsuariosExtrasCapacitaciones(20)
+        printCostosPaquetes()
     }
 
     if (targetElement.matches(`#increment${entity}`)) {
         handleIncrementClick(entity, maxValue)
         printLabelUsuariosExtrasCapacitaciones(20)
+        printCostosPaquetes()
     }
 }
 
@@ -440,13 +484,12 @@ function printCostosPaquetes() {
         'migracionCheckboxGrow'
     ) as HTMLInputElement
 
-    if (!capacitacionCheckboxGrow.checked) {
-        costosGrow.hasCapacitacionChecked = false
-    }
-
-    if (!migracionCheckboxGrow.checked) {
-        costosGrow.hasMigracionChecked = false
-    }
+    costosGrow.hasCapacitacionChecked = capacitacionCheckboxGrow.checked
+        ? true
+        : false
+    costosGrow.hasMigracionChecked = migracionCheckboxGrow.checked
+        ? true
+        : false
 
     const costosPaquetes = getAllCostosPaquetes(
         atributosDeCostosDinamicosPaquetes,
@@ -491,6 +534,7 @@ function addInputListeners(inputs): void {
         if (input.type === 'number') {
             inputElement.addEventListener('change', () => {
                 updateValorInputNumber(input.id, input.minValue, input.maxValue)
+                printCostosPaquetes()
                 printLabelUsuariosExtrasCapacitaciones(20)
                 return
             })
@@ -503,6 +547,7 @@ function addInputListeners(inputs): void {
                         input.minValue,
                         input.maxValue
                     )
+                    printCostosPaquetes()
                     printLabelUsuariosExtrasCapacitaciones(20)
                     return
                 }
@@ -513,12 +558,59 @@ function addInputListeners(inputs): void {
             inputElement.addEventListener('click', () => {
                 updateValorInputSwitch(input.id)
                 printModalidadPagos()
+                printCostosPaquetes()
                 // checkLimitsPaquete('Grow', limitesGrow, costosGrow)
                 return
             })
         }
     }
 }
+
+function setInformationFromPackageSelectedToLocalStorage() {
+    const data: IPdfCotizacion = {
+        // informacion del paquete
+        iconoPaquete: 'grow',
+        nombrePaquete: 'Grow',
+
+        // costos
+        moneda: 'USD',
+        costoInicial: '100',
+        precioSegundoAno: '150',
+        modalidadPagoMembresia: 'Mensual',
+        modalidadPagoImplementacion: 'Mensual',
+        costoImplementacion: '500',
+        costoMembresia: '50',
+        costoUsuarios: '100',
+        costoTimbres: '100',
+
+        // cantidades
+        cantidadTimbres: localStorage.getItem('Timbres'),
+        cantidadSucursales: localStorage.getItem('Sucursales'),
+        cantidadUsuarios: localStorage.getItem('Usuarios'),
+        cantidadEmpleados: localStorage.getItem('Empleados'),
+
+        costoUsuarioExtra: '10',
+    }
+
+    Object.entries(data).forEach(([key, value]) => {
+        localStorage.setItem(key, value)
+    })
+}
+
+const migracionCheckboxGrow = document.getElementById(
+    'migracionCheckboxGrow'
+) as HTMLInputElement
+const capacitacionCheckboxGrow = document.getElementById(
+    'capacitacionCheckboxGrow'
+) as HTMLInputElement
+
+migracionCheckboxGrow.addEventListener('click', () => {
+    printCostosPaquetes()
+})
+
+capacitacionCheckboxGrow.addEventListener('click', () => {
+    printCostosPaquetes()
+})
 
 // Refactorizar
 
@@ -603,6 +695,9 @@ window.document.addEventListener('click', (e) => {
         cambiarSpanDeDivisaDolares(spansCostos, costosTablaInstitutional, 'mxn')
         cambiarSpanDeDivisaDolares(spansCostos, costosTablaManufacturing, 'mxn')
         cambiarSpanDeDivisaDolares(spansCostos, costosTablaEnterprise, 'mxn')
+        cambiarSpanXML('mxn')
+        cambiarElementoADolares('migracionGrow', 'mxn')
+        printCostosPaquetes()
 
         // siempre al final
         printMoneda()
@@ -614,6 +709,9 @@ window.document.addEventListener('click', (e) => {
         cambiarSpanDeDivisaDolares(spansCostos, costosTablaInstitutional, 'usd')
         cambiarSpanDeDivisaDolares(spansCostos, costosTablaManufacturing, 'usd')
         cambiarSpanDeDivisaDolares(spansCostos, costosTablaEnterprise, 'usd')
+        cambiarSpanXML('usd')
+        cambiarElementoADolares('migracionGrow', 'usd')
+        printCostosPaquetes()
 
         // siempre al final
         printMoneda()
@@ -630,7 +728,7 @@ reloadValorInputSwitch('MembresiaMensual')
 addInputListeners(inputsEnDOM)
 
 // Printear valores de etiquetas.
-
 printCostosPaquetes()
 printModalidadPagos()
+printLabelUsuariosExtrasCapacitaciones(20)
 printMoneda()

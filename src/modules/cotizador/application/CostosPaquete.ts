@@ -82,6 +82,26 @@ function calcularCostoFacturacionAnual(
     return Math.floor(costoBaseMensual * mesesDelAño + costoUsuarios)
 }
 
+function calcularCostoImplementacionUnicoPago(
+    costoActivacion,
+    costoMigracion,
+    costoCapacitacion,    
+    hasMigracionChecked = true,
+    hasCapacitacionChecked = true
+) {
+    if (!hasMigracionChecked) {
+        costoCapacitacion = 0
+    }
+
+    if (!hasCapacitacionChecked) {
+        costoMigracion = 0
+    }
+
+    const costoTotal = costoActivacion + costoMigracion + costoCapacitacion    
+
+    return Math.floor(costoTotal)
+}
+
 function calcularCostoUsuario(
     cantidadUsuariosRequeridos,
     cantidadUsuariosGratisIncluidos,
@@ -187,6 +207,14 @@ export function getAllCostosPaquetes(
             costoUsuarios
         )
 
+        const costoImplementacionUnicoPago = calcularCostoImplementacionUnicoPago(
+            paquete.costoActivacion,
+            paquete.costoMigracion,
+            costoCapacitacion,            
+            paquete.hasMigracionChecked,
+            paquete.hasCapacitacionChecked
+        )
+
         const costoPrimerAno = calcularCostoPrimerAno(
             paquete.costoBaseMensual,
             atributosDeCostosDinamicosPaquetes.isPagoImplementacionMensual,
@@ -210,6 +238,7 @@ export function getAllCostosPaquetes(
             costoFacturacionAnual,
             costoPrimerAno,
             costoSegundoAno,
+            costoImplementacionUnicoPago
         }
 
         costosPaquetes[paquete.nombre] = costosPaquete

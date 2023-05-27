@@ -44,6 +44,16 @@ function calcularCostoFacturacionAnual(costoBaseMensual, costoUsuarios) {
     const mesesDelAño = 12;
     return Math.floor(costoBaseMensual * mesesDelAño + costoUsuarios);
 }
+function calcularCostoImplementacionUnicoPago(costoActivacion, costoMigracion, costoCapacitacion, hasMigracionChecked = true, hasCapacitacionChecked = true) {
+    if (!hasMigracionChecked) {
+        costoCapacitacion = 0;
+    }
+    if (!hasCapacitacionChecked) {
+        costoMigracion = 0;
+    }
+    const costoTotal = costoActivacion + costoMigracion + costoCapacitacion;
+    return Math.floor(costoTotal);
+}
 function calcularCostoUsuario(cantidadUsuariosRequeridos, cantidadUsuariosGratisIncluidos, costoUsuarioExtra, hasPrecioUsuarioExtraVariable = false, costoUsuarioExtraDespuesDeLimite, cantidadDeUsuariosAntesDelDescuento) {
     if (hasPrecioUsuarioExtraVariable) {
         if (cantidadUsuariosRequeridos > cantidadDeUsuariosAntesDelDescuento) {
@@ -81,6 +91,7 @@ export function getAllCostosPaquetes(atributosDeCostosDinamicosPaquetes, ...paqu
         const costoTimbres = calcularCostoTimbres(atributosDeCostosDinamicosPaquetes.timbresRequeridos, paquete.timbresGratisIncluidos, paquete.costoTimbreExtra);
         const costoUsuarios = calcularCostoUsuario(atributosDeCostosDinamicosPaquetes.usuariosRequeridos, paquete.usuariosGratisIncluidos, paquete.costoUsuarioExtra, paquete.hasPrecioUsuarioExtraVariable, paquete.costoUsuarioExtraDespuesDeLimite, paquete.cantidadDeUsuariosAntesDelDescuento);
         const costoFacturacionAnual = calcularCostoFacturacionAnual(paquete.costoBaseMensual, costoUsuarios);
+        const costoImplementacionUnicoPago = calcularCostoImplementacionUnicoPago(paquete.costoActivacion, paquete.costoMigracion, costoCapacitacion, paquete.hasMigracionChecked, paquete.hasCapacitacionChecked);
         const costoPrimerAno = calcularCostoPrimerAno(paquete.costoBaseMensual, atributosDeCostosDinamicosPaquetes.isPagoImplementacionMensual, atributosDeCostosDinamicosPaquetes.isPagoMensualidadMensual, costoImplementacion, costoMembresia, costoTimbres, costoUsuarios);
         const costoSegundoAno = calcularCostoSegundoAno(costoMembresia, costoTimbres, costoUsuarios);
         const costosPaquete = {
@@ -90,6 +101,7 @@ export function getAllCostosPaquetes(atributosDeCostosDinamicosPaquetes, ...paqu
             costoFacturacionAnual,
             costoPrimerAno,
             costoSegundoAno,
+            costoImplementacionUnicoPago
         };
         costosPaquetes[paquete.nombre] = costosPaquete;
     }

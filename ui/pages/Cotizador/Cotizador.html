@@ -4270,9 +4270,9 @@
 
             <!-- Limites de usuarios -->
             <tr-texto
-                tooltipVisibilityClass="hidden"
-                tooltipVisbilityClass="hidden"
-                tooltipIconVisbility="hidden"
+                id="limitesDeUsuarios"
+                tooltipIconVisbility=""
+                tooltipText="Los servicios, infraestructura, especialistas, implementadores y tecnologías pueden cambiar en cada paquete."
                 textoPrimeraColumna=" Límites de usuarios"
                 textoGrow="1-14"
                 textoInstitutional="1-29"
@@ -4301,7 +4301,7 @@
                 tooltipIconVisbility="hidden"
                 textoPrimeraColumna="Limite de empleados"
                 textoGrow="29"
-                textoInstitutional="29"
+                textoInstitutional="99"
                 textoManufacturing="299"
                 textoEnterprise="999"
                 textoInternationalEnterprise="Contacta a ventas"
@@ -4335,28 +4335,106 @@
             </tr-texto>
 
             <!-- Servicio de generación XML-->
-            <tr-texto
-                tooltipVisibilityClass="hidden"
-                id="generacionXML"
-                tooltipIconVisbility=""
-                tooltipText="Se muestra el precio neto. Utilice los que necesite y pague en diciembre."
-                textoPrimeraColumna="Servicio de </br> generación XML"
-                textoGrow="$1 mxn (IVA incluido)"
-                textoInstitutional="$1 mxn (IVA incluido)"
-                textoManufacturing="$1 mxn (IVA incluido)"
-                textoEnterprise="$1 mxn (IVA incluido)"
-                textoInternationalEnterprise="Contacta a ventas"
-            >
-            </tr-texto>
+            <table class="border-collapse text-center">
+                <tbody>
+                    <tr>
+                        <th
+                            class="containerWidthTh border-x border-b border-gray-900/10 p-3"
+                        >
+                            <div
+                                class="relative flex items-center justify-center gap-x-4"
+                            >
+                                <span class="w-4/6"
+                                    >Servicio de generación XML</span
+                                >
+                                <img
+                                    class="iconsWidth"
+                                    id="tooltipIcongeneracionXML"
+                                    src="/src/assets/icons/tooltip-icon.svg"
+                                />
+                                <div
+                                    class="absolute -right-60 -top-9 hidden w-64 rounded border border-gray-900/10 bg-white p-4 text-left text-xs font-semibold text-gray-700 shadow"
+                                    id="tooltipTextgeneracionXML"
+                                >
+                                    Se muestra el precio neto. Utilice los que
+                                    necesite y pague en diciembre.
+                                </div>
+                            </div>
+                        </th>
+
+                        <td
+                            class="containerWidthTd border-b border-r border-gray-900/10 p-3"
+                        >
+                            <div
+                                class="flex items-center justify-center gap-x-1"
+                            >
+                                <span class="-mr-1">$</span>
+                                <span id="generacionXMLGrow"></span>
+                                <span class="moneda">mxn</span>
+                                <span class="-mr-1">/</span>
+                                <span>cada uno</span>
+                            </div>
+                        </td>
+
+                        <td
+                            class="containerWidthTd border-b border-r border-gray-900/10 p-3"
+                        >
+                            <div
+                                class="flex items-center justify-center gap-x-1"
+                            >
+                                <span class="-mr-1">$</span>
+                                <span id="generacionXMLInstitutional"></span>
+                                <span class="moneda">mxn</span>
+                                <span class="-mr-1">/</span>
+                                <span>cada uno</span>
+                            </div>
+                        </td>
+
+                        <td
+                            class="containerWidthTd border-b border-r border-gray-900/10 p-3"
+                        >
+                            <div
+                                class="flex items-center justify-center gap-x-1"
+                            >
+                                <span class="-mr-1">$</span>
+                                <span id="generacionXMLManufacturing"></span>
+                                <span class="moneda">mxn</span>
+                                <span class="-mr-1">/</span>
+                                <span>cada uno</span>
+                            </div>
+                        </td>
+
+                        <td
+                            class="containerWidthTd border-b border-r border-gray-900/10 p-3"
+                        >
+                            <div
+                                class="flex items-center justify-center gap-x-1"
+                            >
+                                <span class="-mr-1">$</span>
+                                <span id="generacionXMLEnterprise"></span>
+                                <span class="moneda">mxn</span>
+                                <span class="-mr-1">/</span>
+                                <span>cada uno</span>
+                            </div>
+                        </td>
+
+                        <td
+                            class="containerWidthTd border-b border-r border-gray-900/10 p-3"
+                        >
+                            <span>Contacta a ventas</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
             <!------- Detalles de precios ------->
             <section-info
                 texto="Ver detalles de precio"
                 id="detallesPrecios"
-                showIconDefaultVisibility="flex"
-                exitIconDefaultVisibility="hidden"
+                showIconDefaultVisibility="hidden"
+                exitIconDefaultVisibility="flex"
                 wantToChangeIconDefaultVisibility="true"
-                wantToShowChildren="true"
+                wantToShowChildren="false"
             ></section-info>
 
             <!------- Detalle de precios children ------->
@@ -4704,7 +4782,7 @@
                                 >
                                     <span class="-mr-1">$</span>
                                     <span
-                                        class="costoImplementacionGrow"
+                                        class="costoImplementacionUnicoPagoGrow"
                                     ></span>
                                     <span class="moneda"></span>
                                     <span class="text-xs font-bold"
@@ -4726,7 +4804,7 @@
                                 >
                                     <span class="-mr-1">$</span>
                                     <span
-                                        class="costoImplementacionInstitutional"
+                                        class="costoImplementacionUnicoPagoInstitutional"
                                     ></span>
                                     <span class="moneda"></span>
                                     <span class="text-xs font-bold"
@@ -4748,7 +4826,7 @@
                                 >
                                     <span class="-mr-1">$</span>
                                     <span
-                                        class="costoImplementacionManufacturing"
+                                        class="costoImplementacionUnicoPagoManufacturing"
                                     ></span>
                                     <span class="moneda"></span>
                                     <span class="text-xs font-bold"
@@ -4770,7 +4848,7 @@
                                 >
                                     <span class="-mr-1">$</span>
                                     <span
-                                        class="costoImplementacionEnterprise"
+                                        class="costoImplementacionUnicoPagoEnterprise"
                                     ></span>
                                     <span class="moneda"></span>
                                     <span class="text-xs font-bold"
@@ -7072,6 +7150,7 @@
                 <tr-modulos
                     id="mantenimiento"
                     textoPrimeraColumna="Mantenimiento"
+                    tachitaGrow=""
                 ></tr-modulos>
 
                 <!--------- mantenimiento --------->
@@ -7080,48 +7159,56 @@
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Mantenimiento"
+                        tachitaGrow=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Solicitudes de mantenimiento"
+                        tachitaGrow=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Órdenes de mantenimiento"
+                        tachitaGrow=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Severidades"
+                        tachitaGrow=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Fallas"
+                        tachitaGrow=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Lapsos"
+                        tachitaGrow=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Tipos de mantenimiento"
+                        tachitaGrow=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Herramientas"
+                        tachitaGrow=""
                     ></tr-modulos>
                 </div>
 
@@ -7129,6 +7216,8 @@
                 <tr-modulos
                     id="manufactura"
                     textoPrimeraColumna="Manufactura"
+                    tachitaGrow=""
+                    tachitaInstitutional=""
                 ></tr-modulos>
 
                 <!--------- manufactura --------->
@@ -7137,96 +7226,128 @@
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Mantenimiento"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Gestión de la producción"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Unidades productivas"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Órdenes de producción"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Listados de materiales"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Producción general"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Pronostico de producción"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Características productivas"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Costos de órdenes de producción"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Maquinaria"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="MPR"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="MPS"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Costos de producción"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Lotes"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Materiales"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Procesos productivos"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
                     ></tr-modulos>
                 </div>
 
@@ -7234,6 +7355,10 @@
                 <tr-modulos
                     id="serviciosEspecializados"
                     textoPrimeraColumna="Servicios especializados"
+                    tachitaGrow=""
+                    tachitaInstitutional=""
+                    tachitaManufacturing=""
+                    tachitaEnterprise=""
                 ></tr-modulos>
 
                 <!--------- serviciosEspecializados --------->
@@ -7242,165 +7367,277 @@
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Respaldos automáticos"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Órdenes de servicios GPS"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Menús de flujo"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Catálogos de productos de terceros **"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Dirección"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Integraciones **"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Integraciones portales de proveedores **"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Integraciones al portal de clientes **"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Integraciones e-commerce **"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Integración software de marketing **"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="WMS **"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Administración de SIM **"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Reportes personalizados **"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Software de manufactura personalizado **"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Adecuaciones personalizadas **"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Módulos fiscales internacionales **"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Versión especializada **"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Control patrimonial **"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Costos de producción"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Comunicación corporativa"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Servicio de análisis y mejora de procesos **"
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                     ></tr-modulos>
 
                     <tr-modulos
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Servidor de correos ilimitado **"
                     ></tr-modulos>
 
                     <tr-modulos
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Desarrollo de página web **"
                     ></tr-modulos>
 
                     <tr-modulos
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Desarrollo de E-commerce **"
                     ></tr-modulos>
 
                     <tr-modulos
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Integraciones ilimitadas con otros software **"
                     ></tr-modulos>
 
                     <tr-modulos
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Integración de réplicas de BD con otras datas center"
                     ></tr-modulos>
 
                     <tr-modulos
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Personalización de herramientas **"
                     ></tr-modulos>
 
                     <tr-modulos
+                        tachitaGrow=""
+                        tachitaInstitutional=""
+                        tachitaManufacturing=""
+                        tachitaEnterprise=""
                         arrorIconVisibility="hidden"
                         bgColor="gray-100/60"
                         textoPrimeraColumna="Servidores especializados **"
@@ -7894,12 +8131,13 @@
             </tr-costos>
 
             <!-- Razón social adicional -->
+            <!-- Refactorizar ya que no es dinamico y si en el futuro hay cambios se tendra que edita -->
             <tr-texto
                 tooltipIconVisbility="hidden"
                 tooltipText=""
                 textoPrimeraColumna="Razón social adicional"
                 textoGrow='<div class="flex flex-col gap-y-2 justify-center items-center"> <div class="flex gap-x-1">
-                    $0 <span class="spanPagos"></span>
+                    $0 <span>/</span> <span class="spanPagos -ml-1"></span>
                 </div> <button                
                     id="razonSocialGrow"
                     class="w-48 rounded-full bg-white py-1.5 text-center text-xs font-semibold leading-6 text-gray-800 ring-1 ring-inset ring-blue-500 hover:ring-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-200 "
@@ -7907,7 +8145,7 @@
                     Agregar Razón Social <span aria-hidden="true"> →</span>
                 </button>'
                 textoInstitutional='<div class="flex flex-col gap-y-2 justify-center items-center"> <div class="flex gap-x-1">
-                    $0 <span class="spanPagos"></span>
+                    $0 <span>/</span> <span class="spanPagos -ml-1"></span>
                 </div> <button                
                     id="razonSocialInstitutional"
                     class="w-48 rounded-full bg-white py-1.5 text-center text-xs font-semibold leading-6 text-gray-800 ring-1 ring-inset ring-blue-500 hover:ring-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-200 "
@@ -7915,7 +8153,7 @@
                     Agregar Razón Social <span aria-hidden="true"> →</span>
                 </button>'
                 textoManufacturing='<div class="flex flex-col gap-y-2 justify-center items-center"> <div class="flex gap-x-1">
-                    $0 <span class="spanPagos"></span>
+                    $0 <span>/</span> <span class="spanPagos -ml-1"></span>
                 </div> <button                
                     id="razonSocialManufacturing"
                     class="w-48 rounded-full bg-white py-1.5 text-center text-xs font-semibold leading-6 text-gray-800 ring-1 ring-inset ring-blue-500 hover:ring-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-200 "
@@ -7923,7 +8161,7 @@
                     Agregar Razón Social <span aria-hidden="true"> →</span>
                 </button>'
                 textoEnterprise='<div class="flex flex-col gap-y-2 justify-center items-center"> <div class="flex gap-x-1">
-                    $0 <span class="spanPagos"></span>
+                    $0 <span>/</span> <span class="spanPagos -ml-1"></span>
                 </div> <button                
                     id="razonSocialEnterprise"
                     class="w-48 rounded-full bg-white py-1.5 text-center text-xs font-semibold leading-6 text-gray-800 ring-1 ring-inset ring-blue-500 hover:ring-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-200 "

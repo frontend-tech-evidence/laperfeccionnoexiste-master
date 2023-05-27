@@ -5,16 +5,49 @@ class TrModulos extends HTMLElement {
         const id = this.getAttribute('id');
         const arrorIconVisibility = this.getAttribute('arrorIconVisibility');
         let bgColor = this.getAttribute('bgColor');
-        const tachitaGrow = this.getAttribute('tachitaGrow');
-        const palomitaGrow = this.getAttribute('palomitaGrow');
-        const tachitaInstitutional = this.getAttribute('tachitaInstitutional');
-        const palomitaInstitutional = this.getAttribute('palomitaInstitutional');
-        const tachitaManufacturing = this.getAttribute('tachitaManufacturing');
-        const palomitaManufacturing = this.getAttribute('palomitaManufacturing');
-        const tachitaEnterprise = this.getAttribute('tachitaEnterprise');
-        const palomitaEnterprise = this.getAttribute('palomitaEnterprise');
+        let tachitaGrow = this.getAttribute('tachitaGrow');
+        let palomitaGrow = this.getAttribute('palomitaGrow');
+        let tachitaInstitutional = this.getAttribute('tachitaInstitutional');
+        let palomitaInstitutional = this.getAttribute('palomitaInstitutional');
+        let tachitaManufacturing = this.getAttribute('tachitaManufacturing');
+        let palomitaManufacturing = this.getAttribute('palomitaManufacturing');
+        let tachitaEnterprise = this.getAttribute('tachitaEnterprise');
+        let palomitaEnterprise = this.getAttribute('palomitaEnterprise');
         if (bgColor === null) {
             bgColor = 'white';
+        }
+        // Refactorizar
+        if (tachitaGrow === null) {
+            palomitaGrow = '';
+            tachitaGrow = 'hidden';
+        }
+        if (palomitaGrow === null) {
+            tachitaGrow = '';
+            palomitaGrow = 'hidden';
+        }
+        if (tachitaInstitutional === null) {
+            palomitaInstitutional = '';
+            tachitaInstitutional = 'hidden';
+        }
+        if (palomitaInstitutional === null) {
+            tachitaInstitutional = '';
+            palomitaInstitutional = 'hidden';
+        }
+        if (tachitaManufacturing === null) {
+            palomitaManufacturing = '';
+            tachitaManufacturing = 'hidden';
+        }
+        if (palomitaManufacturing === null) {
+            tachitaManufacturing = '';
+            palomitaManufacturing = 'hidden';
+        }
+        if (tachitaEnterprise === null) {
+            palomitaEnterprise = '';
+            tachitaEnterprise = 'hidden';
+        }
+        if (palomitaEnterprise === null) {
+            tachitaEnterprise = '';
+            palomitaEnterprise = 'hidden';
         }
         // Render HTML
         this.innerHTML = `  
@@ -36,8 +69,9 @@ class TrModulos extends HTMLElement {
                         <td class="border-b border-x border-gray-900/10 p-3 containerWidthTd"> 
                             <div class="flex justify-center">
                                     <img class="w-5 ${palomitaGrow}"
-                                    src="/src/assets/icons/palomita-icon.svg"/>
-                                    <hr class="${tachitaGrow} border-t border-gray-300 my-4">
+                                    src="/src/assets/icons/palomita-icon.svg"/>                                    
+                                    <img class="w-[2.5rem] text-blue-500 ${tachitaGrow}"
+                                    src="/src/assets/icons/line.svg"/> 
                             </div>
                         </td>
 
@@ -45,7 +79,8 @@ class TrModulos extends HTMLElement {
                             <div class="flex justify-center">
                                     <img class="w-5 ${palomitaInstitutional}"
                                     src="/src/assets/icons/palomita-icon.svg"/>
-                                    <hr class="${tachitaInstitutional} border-t border-gray-300 my-4">
+                                    <img class="w-[2.5rem] text-blue-500 ${tachitaInstitutional}"
+                                    src="/src/assets/icons/line.svg"/> 
                             </div>
                         </td>
 
@@ -53,7 +88,8 @@ class TrModulos extends HTMLElement {
                             <div class="flex justify-center">
                                     <img class="w-5 ${palomitaManufacturing}"
                                     src="/src/assets/icons/palomita-icon.svg"/>
-                                    <hr class="${tachitaManufacturing} border-t border-gray-300 my-4">
+                                    <img class="w-[2.5rem] text-blue-500 ${tachitaManufacturing}"
+                                    src="/src/assets/icons/line.svg"/> 
                             </div>
                         </td>
 
@@ -61,7 +97,9 @@ class TrModulos extends HTMLElement {
                             <div class="flex justify-center">
                                     <img class="w-5 ${palomitaEnterprise}"
                                     src="/src/assets/icons/palomita-icon.svg"/>
-                                    <hr class="${tachitaEnterprise} border-t border-gray-300 my-4">
+
+                                    <img class="w-[2.5rem] text-blue-500 ${tachitaEnterprise}"
+                                    src="/src/assets/icons/line.svg"/>                                   
                             </div>
                         </td>
 

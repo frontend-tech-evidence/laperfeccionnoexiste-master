@@ -14,7 +14,7 @@ export const costosTablaGrow: ICostosDetallesTabla = {
     precioCapacitacionUsuarios: 0,
     upgradeVersion: 16421,
     precioRazonSocialAdicional: 2990,
-    precioUsuarioAdicionalRazonSocial: 199,
+    precioUsuarioAdicionalRazonSocial: 199,    
 }
 
 export const costosTablaInstitutional: ICostosDetallesTabla = {
