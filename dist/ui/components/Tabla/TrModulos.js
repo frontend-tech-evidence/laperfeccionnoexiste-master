@@ -1,27 +1,21 @@
 class TrModulos extends HTMLElement {
     constructor() {
-        super()
-        const textoPrimeraColumna = this.getAttribute('textoPrimeraColumna')
-        const id = this.getAttribute('id')
-        const arrorIconVisibility = this.getAttribute('arrorIconVisibility')
-        let bgColor = this.getAttribute('bgColor')
-
-        const tachitaGrow = this.getAttribute('tachitaGrow')
-        const palomitaGrow = this.getAttribute('palomitaGrow')
-
-        const tachitaInstitutional = this.getAttribute('tachitaInstitutional')
-        const palomitaInstitutional = this.getAttribute('palomitaInstitutional')
-
-        const tachitaManufacturing = this.getAttribute('tachitaManufacturing')
-        const palomitaManufacturing = this.getAttribute('palomitaManufacturing')
-
-        const tachitaEnterprise = this.getAttribute('tachitaEnterprise')
-        const palomitaEnterprise = this.getAttribute('palomitaEnterprise')
-
+        super();
+        const textoPrimeraColumna = this.getAttribute('textoPrimeraColumna');
+        const id = this.getAttribute('id');
+        const arrorIconVisibility = this.getAttribute('arrorIconVisibility');
+        let bgColor = this.getAttribute('bgColor');
+        const tachitaGrow = this.getAttribute('tachitaGrow');
+        const palomitaGrow = this.getAttribute('palomitaGrow');
+        const tachitaInstitutional = this.getAttribute('tachitaInstitutional');
+        const palomitaInstitutional = this.getAttribute('palomitaInstitutional');
+        const tachitaManufacturing = this.getAttribute('tachitaManufacturing');
+        const palomitaManufacturing = this.getAttribute('palomitaManufacturing');
+        const tachitaEnterprise = this.getAttribute('tachitaEnterprise');
+        const palomitaEnterprise = this.getAttribute('palomitaEnterprise');
         if (bgColor === null) {
-            bgColor = 'white'
+            bgColor = 'white';
         }
-
         // Render HTML
         this.innerHTML = `  
         <table class="border-collapse text-center bg-${bgColor}">
@@ -80,37 +74,32 @@ class TrModulos extends HTMLElement {
                     </tr>
             </tbody>
         </table>
-        `
-
+        `;
         function hideShowElementHidden(id) {
-            const element = document.getElementById(id)
+            const element = document.getElementById(id);
             if (element.classList.contains('hidden')) {
-                element.classList.remove('hidden')
-            } else {
-                element.classList.add('hidden')
+                element.classList.remove('hidden');
+            }
+            else {
+                element.classList.add('hidden');
             }
         }
-
-        const tooltipIcon = document.getElementById(`tooltipIcon${id}`)
-
+        const tooltipIcon = document.getElementById(`tooltipIcon${id}`);
         tooltipIcon.addEventListener('click', () => {
-            hideShowElementHidden(`${id}Children`)
+            hideShowElementHidden(`${id}Children`);
             // hideShowElementHidden(`${id}ShowIcon`)
             // hideShowElementHidden(`${id}ExitIcon`)
-        })
+        });
     }
-
     /**
      * Runs each time the element is appended to or moved in the DOM
      */
-    connectedCallback() {}
-
+    connectedCallback() { }
     /**
      * Runs when the element is removed from the DOM
      */
-    disconnectedCallback() {}
+    disconnectedCallback() { }
 }
-
 if ('customElements' in window) {
-    customElements.define('tr-modulos', TrModulos)
+    customElements.define('tr-modulos', TrModulos);
 }

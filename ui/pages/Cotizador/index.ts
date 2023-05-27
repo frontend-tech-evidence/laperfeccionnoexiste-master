@@ -1,7 +1,25 @@
 /**
  * @author Raul Galindo
- * @description Entry point UI page - Cotizador.
+ * @description Unicamente interaccion con la UI.
  */
+
+import { getAllCostosPaquetes } from '../../../src/modules/cotizador/application/CostosPaquete.js'
+import { cambiarDeDivisa } from '../../../src/modules/cotizador/application/Divisas.js'
+import {
+    costosEnterprise,
+    costosGrow,
+    costosInstitutional,
+    costosManufacturing,
+} from '../../../src/modules/cotizador/domain/CostosPaquetes.js'
+import {
+    costosTablaGrow,
+    costosTablaInstitutional,
+    costosTablaManufacturing,
+    costosTablaEnterprise,
+} from '../../../src/modules/cotizador/domain/CostosTabla.js'
+import { Dolar } from '../../../src/modules/cotizador/domain/Divisas.js'
+
+import { ICostosDetallesTabla } from '../../../src/modules/cotizador/domain/ICostosTabla.js'
 
 const tooltips = [
     [
@@ -37,26 +55,6 @@ const tooltips = [
     ['tooltipIconcostoInicialEnterprise', 'tooltipTextcostoInicialEnterprise'],
 ]
 
-function toggleTooltip(idTooltipText, show) {
-    const tooltipText = document.getElementById(idTooltipText)
-    tooltipText.classList.toggle('hidden', !show)
-}
-
-function setupTooltipEventListeners(idTooltipIcon, idTooltipText) {
-    const tooltipIcon = document.getElementById(idTooltipIcon)
-
-    tooltipIcon.addEventListener('mouseover', () =>
-        toggleTooltip(idTooltipText, true)
-    )
-    tooltipIcon.addEventListener('mouseout', () =>
-        toggleTooltip(idTooltipText, false)
-    )
-}
-
-/**
- * @author Raul Galindo
- * @description Unicamente interaccion con la UI.
- */
 const inputsEnDOM = [
     {
         id: 'Usuarios',
@@ -98,6 +96,67 @@ const inputsEnDOM = [
         type: 'checkbox',
     },
 ]
+
+const spansCostos = [
+    'precioPorUsuario',
+    'precioPorUsuarioDespuesDeLimite',
+    'activacion',
+    'horaVirtualAdicional',
+    'precioCapacitacionUsuarios',
+    'upgradeVersion',
+    'precioRazonSocialAdicional',
+]
+
+function convertirAInteger(cadena) {
+    const cadenaSinComas = cadena.replace(/,/g, '')
+    const entero = parseInt(cadenaSinComas, 10)
+    return entero
+}
+
+function cambiarSpanDeDivisaDolares(
+    spans,
+    paqueteCostos: ICostosDetallesTabla,
+    moneda: string
+) {
+    for (const span in spans) {
+        const spanCostoElement = document.getElementById(
+            `${spans[span]}${paqueteCostos.nombre}`
+        )
+
+        if (spanCostoElement) {
+            const costoFinal = Math.floor(paqueteCostos[spans[span]])
+                .toLocaleString()
+                .replace(/\./g, ',')
+            spanCostoElement.textContent = costoFinal
+
+            if (moneda === 'usd') {
+                const costoFinal = Math.floor(
+                    convertirAInteger(spanCostoElement.textContent) / 16
+                )
+                    .toLocaleString()
+                    .replace(/\./g, ',')
+
+                spanCostoElement.textContent = costoFinal
+            }
+        }
+    }
+}
+
+function toggleTooltip(idTooltipText, show) {
+    const tooltipText = document.getElementById(idTooltipText)
+    tooltipText.classList.toggle('hidden', !show)
+}
+
+function setupTooltipEventListeners(idTooltipIcon, idTooltipText) {
+    const tooltipIcon = document.getElementById(idTooltipIcon)
+
+    tooltipIcon.addEventListener('mouseover', () =>
+        toggleTooltip(idTooltipText, true)
+    )
+    tooltipIcon.addEventListener('mouseout', () =>
+        toggleTooltip(idTooltipText, false)
+    )
+}
 
 function hideShowElementHidden(id: string) {
     const element = document.getElementById(id)
@@ -198,12 +257,16 @@ function printMoneda() {
         moneda = 'mxn'
     }
 
-    const spans = document.querySelectorAll(`.spanMoneda`)
+    const spans = document.querySelectorAll(`.moneda`)
 
     spans.forEach((elemento) => {
         elemento.textContent = moneda
     })
 
+    cambiarSpanDeDivisaDolares(spansCostos, costosTablaGrow, moneda)
+    cambiarSpanDeDivisaDolares(spansCostos, costosTablaInstitutional, moneda)
+    cambiarSpanDeDivisaDolares(spansCostos, costosTablaManufacturing, moneda)
+    cambiarSpanDeDivisaDolares(spansCostos, costosTablaEnterprise, moneda)
     updateMoneda(moneda)
 }
 
@@ -263,7 +326,6 @@ function updateMoneda(moneda: string): void {
     }
 
     localStorage.setItem('moneda', moneda)
-    // Si entro
 }
 
 function handleIncrementClick(inputId: string, minValue: number) {
@@ -298,13 +360,128 @@ function reloadValorInputSwitch(id: string): void {
 function handleClick(targetElement, entity, maxValue, minValue) {
     if (targetElement.matches(`#decrement${entity}`)) {
         handleDecrementClick(entity, minValue)
+        printLabelUsuariosExtrasCapacitaciones(20)
     }
 
     if (targetElement.matches(`#increment${entity}`)) {
         handleIncrementClick(entity, maxValue)
+        printLabelUsuariosExtrasCapacitaciones(20)
     }
 }
 
+// Refactorizar
+function printLabelUsuariosExtrasCapacitaciones(
+    usuariosGratisDeCapacitacion: number
+) {
+    let usuariosRequeridos = document.getElementById(
+        'Usuarios'
+    ) as HTMLInputElement
+
+    const spansUsuariosExtras = document.querySelectorAll(
+        `.usuariosExtraCapacitacion`
+    )
+
+    spansUsuariosExtras.forEach((elemento) => {
+        elemento.textContent = ``
+    })
+
+    if (parseInt(usuariosRequeridos.value) > usuariosGratisDeCapacitacion) {
+        const usuariosExtras =
+            parseInt(usuariosRequeridos.value) - usuariosGratisDeCapacitacion
+        spansUsuariosExtras.forEach((elemento) => {
+            elemento.textContent = `${usuariosExtras} usuarios adicionales`
+        })
+    }
+}
+
+// Refactorizar
+function printCostosPaquetes() {
+    let timbresAgregados = document.getElementById(
+        'Timbres'
+    ) as HTMLInputElement
+
+    let empleadosAgregados = document.getElementById(
+        'Empleados'
+    ) as HTMLInputElement
+
+    let usuariosAgregados = document.getElementById(
+        'Usuarios'
+    ) as HTMLInputElement
+
+    let sucursalesAgregados = document.getElementById(
+        'Sucursales'
+    ) as HTMLInputElement
+
+    // pagos
+    let isPagoImplementacionMensual = document.getElementById(
+        'ImplementacionMensual'
+    ) as HTMLInputElement
+
+    let isPagoMembresiaMensual = document.getElementById(
+        'MembresiaMensual'
+    ) as HTMLInputElement
+
+    const atributosDeCostosDinamicosPaquetes = {
+        timbresRequeridos: parseInt(timbresAgregados.value),
+        empleadosAgregados: parseInt(empleadosAgregados.value),
+        usuariosRequeridos: parseInt(usuariosAgregados.value),
+        sucursalesAgregados: parseInt(sucursalesAgregados.value),
+        // pagos
+        isPagoImplementacionMensual: Boolean(
+            isPagoImplementacionMensual.checked
+        ),
+        isPagoMensualidadMensual: Boolean(isPagoMembresiaMensual.checked),
+    }
+
+    const capacitacionCheckboxGrow = document.getElementById(
+        'capacitacionCheckboxGrow'
+    ) as HTMLInputElement
+    const migracionCheckboxGrow = document.getElementById(
+        'migracionCheckboxGrow'
+    ) as HTMLInputElement
+
+    if (!capacitacionCheckboxGrow.checked) {
+        costosGrow.hasCapacitacionChecked = false
+    }
+
+    if (!migracionCheckboxGrow.checked) {
+        costosGrow.hasMigracionChecked = false
+    }
+
+    const costosPaquetes = getAllCostosPaquetes(
+        atributosDeCostosDinamicosPaquetes,
+        costosGrow,
+        costosInstitutional,
+        costosManufacturing,
+        costosEnterprise
+    )
+
+    let moneda = localStorage.getItem('moneda')
+
+    for (const paquete in costosPaquetes) {
+        const costosEnPaquete = costosPaquetes[paquete]
+
+        for (const costo in costosEnPaquete) {
+            const selector = `${costo}${paquete}`
+
+            let costoFinal = costosEnPaquete[costo]
+            if (moneda === 'usd') {
+                costoFinal = cambiarDeDivisa(Dolar, costoFinal)
+            }
+
+            const spans = document.querySelectorAll(`.${selector}`)
+
+            spans.forEach((elemento) => {
+                const costoFormateado = `${costoFinal
+                    .toLocaleString()
+                    .replace(/\./g, ',')}`
+                elemento.textContent = costoFormateado
+            })
+        }
+    }
+}
+
+// Refactorizar
 function addInputListeners(inputs): void {
     for (const input of inputs) {
         const inputElement = document.getElementById(
@@ -314,6 +491,7 @@ function addInputListeners(inputs): void {
         if (input.type === 'number') {
             inputElement.addEventListener('change', () => {
                 updateValorInputNumber(input.id, input.minValue, input.maxValue)
+                printLabelUsuariosExtrasCapacitaciones(20)
                 return
             })
 
@@ -325,6 +503,7 @@ function addInputListeners(inputs): void {
                         input.minValue,
                         input.maxValue
                     )
+                    printLabelUsuariosExtrasCapacitaciones(20)
                     return
                 }
             })
@@ -398,6 +577,10 @@ function addInputListeners(inputs): void {
 //     childExploreMas.style.display = 'none'
 // })
 
+// checkLimitsPaquete('Grow', limitesGrow, costosGrow)
+// checkLimitsPaquete('Institutional', limitesInstitutional, costosInstitutional)
+// checkLimitsPaquete('Manufacturing', limitesManufacturing, costosManufacturing)
+// checkLimitsPaquete('Enterprise', limitesEnterprise, costosEnterprise)
 window.document.addEventListener('click', (e) => {
     const targetElement = e.target as Element
 
@@ -416,22 +599,26 @@ window.document.addEventListener('click', (e) => {
 
     if (targetElement.closest('#monedaMXN')) {
         updateMoneda('mxn')
-        console.log("Entro")
+        cambiarSpanDeDivisaDolares(spansCostos, costosTablaGrow, 'mxn')
+        cambiarSpanDeDivisaDolares(spansCostos, costosTablaInstitutional, 'mxn')
+        cambiarSpanDeDivisaDolares(spansCostos, costosTablaManufacturing, 'mxn')
+        cambiarSpanDeDivisaDolares(spansCostos, costosTablaEnterprise, 'mxn')
+
         // siempre al final
         printMoneda()
     }
 
     if (targetElement.closest('#monedaUSD')) {
         updateMoneda('usd')
+        cambiarSpanDeDivisaDolares(spansCostos, costosTablaGrow, 'usd')
+        cambiarSpanDeDivisaDolares(spansCostos, costosTablaInstitutional, 'usd')
+        cambiarSpanDeDivisaDolares(spansCostos, costosTablaManufacturing, 'usd')
+        cambiarSpanDeDivisaDolares(spansCostos, costosTablaEnterprise, 'usd')
+
         // siempre al final
         printMoneda()
     }
 })
-
-// checkLimitsPaquete('Grow', limitesGrow, costosGrow)
-// checkLimitsPaquete('Institutional', limitesInstitutional, costosInstitutional)
-// checkLimitsPaquete('Manufacturing', limitesManufacturing, costosManufacturing)
-// checkLimitsPaquete('Enterprise', limitesEnterprise, costosEnterprise)
 
 tooltips.forEach(([tooltipIcon, tooltipText]) =>
     setupTooltipEventListeners(tooltipIcon, tooltipText)
@@ -444,5 +631,6 @@ addInputListeners(inputsEnDOM)
 
 // Printear valores de etiquetas.
 
+printCostosPaquetes()
 printModalidadPagos()
 printMoneda()
